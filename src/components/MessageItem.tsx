@@ -66,7 +66,7 @@ export default (props: Props) => {
               )
           )
         } else {
-          // 回答的前一条消息一定是提问
+          // The previous message answered must be a question
           question = messages[props.index! - 1].content
           return messages.filter(
             (_, i) => !(i === props.index || i === props.index! - 1)
