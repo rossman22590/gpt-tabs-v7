@@ -97,7 +97,7 @@ async function push(title: string, desp?: string) {
       },
       body: JSON.stringify({
         title,
-        after _
+         desp,
         channel: Number.isInteger(sendChannel) ? Number(sendChannel) : 9
       })
     })
