@@ -44,20 +44,20 @@ export const get: APIRoute = async () => {
     const table = await genBillingsTable(
       billings.sort((a, b) => b.rate - a.rate)
     )
-    const titles = ["帐号余额充足", "没有帐号不可用"]
+    const  titles  =  [ "Account balance is sufficient" ,  "No account is not available" ]
     const descs = [table, ""]
-    if (billings.some(k => k.rate < 0.05)) titles[0] = "有帐号余额已少于 5%"
+    if  ( billings . some ( k  =>  k . rate  <  0.05 ) )  titles [ 0 ]  =  "Account balance is less than 5%"
     if (bannedKeys.length) {
-      titles[1] = "有帐号不可用"
+      titles [ 1 ]  =  "Account is unavailable"
       descs[1] =
-        "\n\n以下帐号不可用，请检查\n\n" +
+        "\n\nThe following accounts are not available, please check\n\n"  +
         bannedKeys.map(k => "- " + k.slice(0, 8)).join("\n")
     }
     await push(titles.join("，"), descs.join("\n\n"))
   } catch (e) {
-    await push(`运行错误\n${String(e)}`)
+    await  push ( `running error\n ${ String ( e ) } ` )
   }
-  return new Response(`ok`)
+  return  new  Response ( `ok` )
 }
 
 async function checkBan(key: string) {
@@ -84,7 +84,7 @@ async function checkBan(key: string) {
     ).then((res: any) => res.json())
     return res.error?.type === "access_terminated"
   } catch {
-    return false
+    return  false
   }
 }
 
@@ -97,7 +97,7 @@ async function push(title: string, desp?: string) {
       },
       body: JSON.stringify({
         title,
-        desp,
+        after _
         channel: Number.isInteger(sendChannel) ? Number(sendChannel) : 9
       })
     })
