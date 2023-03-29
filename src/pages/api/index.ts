@@ -52,7 +52,7 @@ if (_) {
       maxInputTokens = Object.entries(maxInputTokens).reduce((acc, [k]) => {
         acc[k as Model] = Number(_)
         return acc
-      }, {} as typeof maxInputTokens)
+      } ,  { }  as  typeof  maxInputTokens )
     } else {
       maxInputTokens = {
         ...maxInputTokens,
@@ -84,21 +84,21 @@ export const post: APIRoute = async context => {
     } = body
 
     if (pwd && pwd !== password) {
-      throw new Error("密码错误，请联系网站管理员。")
+      throw  new  Error ( "The password is incorrect, please contact the site administrator." )
     }
 
     if (!messages?.length) {
-      throw new Error("没有输入任何文字。")
+      throw  new  Error ( "No text entered." )
     } else {
       const content = messages.at(-1)!.content.trim()
-      if (content.startsWith("查询填写的 Key 的余额")) {
+      if  ( content . startsWith ( "Query the balance of the filled Key" ) )  {
         if (key !== localKey) {
           const billings = await Promise.all(
             splitKeys(key).map(k => fetchBilling(k))
           )
           return new Response(await genBillingsTable(billings))
         } else {
-          throw new Error("没有填写 OpenAI API key，不会查询内置的 Key。")
+          throw  new  Error ( "The OpenAI API key is not filled in, and the built-in Key will not be queried." )
         }
       } else if (content.startsWith("sk-")) {
         const billings = await Promise.all(
@@ -110,7 +110,7 @@ export const post: APIRoute = async context => {
 
     const apiKey = randomKey(splitKeys(key))
 
-    if (!apiKey) throw new Error("没有填写 OpenAI API key，或者 key 填写错误。")
+    if  ( ! apiKey )  throw  new  Error ( "The OpenAI API key is not filled, or the key is wrong." )
 
     const tokens = messages.reduce((acc, cur) => {
       const tokens = countTokens(cur.content)
@@ -122,9 +122,9 @@ export const post: APIRoute = async context => {
     ) {
       if (messages.length > 1)
         throw new Error(
-          `由于开启了连续对话选项，导致本次对话过长，请清除部分内容后重试，或者关闭连续对话选项。`
+          `Because the continuous dialogue option is enabled, this dialogue is too long. Please clear some content and try again, or close the continuous dialogue option. `
         )
-      else throw new Error("太长了，缩短一点吧。")
+      else  throw  new  Error ( "Too long, shorten it." )
     }
 
     const encoder = new TextEncoder()
@@ -148,7 +148,7 @@ export const post: APIRoute = async context => {
         })
       }
     ).catch(err => {
-      return new Response(
+      return  new  Response (
         JSON.stringify({
           error: {
             message: err.message
@@ -193,7 +193,7 @@ export const post: APIRoute = async context => {
 
     return new Response(stream)
   } catch (err: any) {
-    return new Response(
+    return  new  Response (
       JSON.stringify({
         error: {
           message: err.message
@@ -249,7 +249,7 @@ export async function genBillingsTable(billings: Billing[]) {
     )
     .join("\n")
 
-  return `| Key  | 剩余 | 已用 | 总额度 |
+  return  `| Key | Remaining | Used | Total Quota|
 | ---- | ---- | ---- | ------ |
 ${table}
 `
