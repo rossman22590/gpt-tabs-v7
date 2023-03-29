@@ -14,7 +14,7 @@ export default function MessageAction(props: {
       <div class="flex absolute items-center justify-between <sm:top--4 <sm:right-0 top-2 right-2 text-sm text-slate-7 dark:text-slate group-hover:opacity-100 group-focus:opacity-100 opacity-0 dark:bg-#292B32 bg-#E7EBF0 rounded">
         <Show when={props.role === "assistant"}>
           <ActionItem
-            label="复制"
+            label = "Copy"
             onClick={() => {
               setCopied(true)
               props.copy()
@@ -25,19 +25,19 @@ export default function MessageAction(props: {
         </Show>
         <Show when={props.role === "user"}>
           <ActionItem
-            label="编辑"
+            label = "Edit"
             onClick={props.edit}
             icon={"i-carbon:edit"}
           />
         </Show>
         <ActionItem
-          label="重新回答"
+          label = "Regenerate"
           onClick={props.reAnswer}
           icon={"i-carbon:reset"}
         />
         <ActionItem
-          label="删除"
-          onClick={props.del}
+          label = "Delete"
+          onClick = { props . of the }
           icon={"i-carbon:trash-can"}
         />
       </div>
