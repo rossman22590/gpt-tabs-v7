@@ -30,7 +30,7 @@ export default function (props: {
   const [messageList, setMessageList] = createSignal<ChatMessage[]>([])
   const [inputContent, setInputContent] = createSignal("")
   const [currentAssistantMessage, setCurrentAssistantMessage] = createSignal("")
-  const [loading, setLoading] = createSignal(false)
+  const  [ loading ,  setLoading ]  =  createSignal ( false )
   const [controller, setController] = createSignal<AbortController>()
   const [setting, setSetting] = createSignal(_setting)
   const [compatiblePrompt, setCompatiblePrompt] = createSignal<PromptItem[]>([])
@@ -71,7 +71,7 @@ export default function (props: {
       inputRef,
       "compositionstart",
       () => {
-        setCompositionend(false)
+        setCompositioned ( false )
       },
       { passive: true }
     )
@@ -87,7 +87,7 @@ export default function (props: {
       if (setting) {
         const parsed = JSON.parse(setting)
         archiveSession = parsed.archiveSession
-        setSetting({
+        setSetting ( {
           ..._setting,
           ...parsed,
           ...(_resetContinuousDialogue ? { continuousDialogue: false } : {})
@@ -174,7 +174,7 @@ export default function (props: {
         }
       ])
       setCurrentAssistantMessage("")
-      setLoading(false)
+      setLoading ( false )
       setController()
       !isMobile() && inputRef.focus()
     }
@@ -207,7 +207,7 @@ export default function (props: {
     try {
       await fetchGPT(inputValue)
     } catch (error: any) {
-      setLoading(false)
+      setLoading ( false )
       setController()
       if (!error.message.includes("aborted a request"))
         setMessageList([
@@ -223,7 +223,7 @@ export default function (props: {
   }
 
   async function fetchGPT(inputValue: string) {
-    setLoading(true)
+    setLoading ( true )
     const controller = new AbortController()
     setController(controller)
     const systemRule = setting().systemRule.trim()
@@ -253,7 +253,7 @@ export default function (props: {
     }
     const data = response.body
     if (!data) {
-      throw new Error("没有返回数据")
+      throw  new  Error ( "No data returned" )
     }
     const reader = data.getReader()
     const decoder = new TextDecoder("utf-8")
@@ -393,7 +393,7 @@ export default function (props: {
           >
             <SettingAction
               setting={setting}
-              setSetting={setSetting}
+              setSetting = { setSetting }
               clear={clearSession}
               messaages={messageList()}
             />
@@ -402,12 +402,12 @@ export default function (props: {
             when={!loading()}
             fallback={() => (
               <div class="h-12 flex items-center justify-center bg-slate bg-op-15 text-slate rounded">
-                <span>AI 正在思考...</span>
+                < span > AI is thinking... < / span >
                 <div
                   class="ml-1em px-2 py-0.5 border border-slate text-slate rounded-md text-sm op-70 cursor-pointer hover:bg-slate/10"
                   onClick={stopStreamFetch}
                 >
-                  不需要了
+                  no need
                 </div>
               </div>
             )}
@@ -422,7 +422,7 @@ export default function (props: {
               <textarea
                 ref={inputRef!}
                 id="input"
-                placeholder="与 ta 对话吧"
+                placeholder = "talk to ta"
                 autocomplete="off"
                 value={inputContent()}
                 autofocus
@@ -482,7 +482,7 @@ export default function (props: {
                 }}
               >
                 <button
-                  title="发送"
+                  title = "Send"
                   onClick={() => sendMessage()}
                   class="i-carbon:send-filled text-5 mx-3"
                 />
